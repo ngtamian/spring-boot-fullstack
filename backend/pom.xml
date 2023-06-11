@@ -18,6 +18,8 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<docker.username>ngtamian</docker.username>
+		<docker.image.name>amigoscode-api</docker.image.name>
+		<docker.image.tag />
 	</properties>
 	<organization>
 		<name>amigoscode</name>
@@ -166,7 +168,9 @@
 					    </platforms>
 					</from>
 					<to>
-						<image>docker.io/${docker.username}/${project.artifactId}:${project.version}</image>
+                        <!--<image>docker.io/${docker.username}/${project.artifactId}:${project.version}</image>-->
+						<image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
+						<!--docker.io/ngtamian/amigoscode-api:2023.6.11-->
 						<auth>
 							<username>ngtamian</username>
 							<password>dckr_pat_5H8jQuOkBB-_nh8cq2sAzuF4Sbo</password>
