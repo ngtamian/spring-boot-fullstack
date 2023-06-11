@@ -1,4 +1,4 @@
-package com.amigoscode.customer;
+package com.amigoscode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
