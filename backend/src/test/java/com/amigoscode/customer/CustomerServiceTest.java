@@ -53,7 +53,7 @@ class CustomerServiceTest {
     void canGetCustomer() {
         // Given
         int id = 10;
-        Customer customer = new Customer(id,"Alex","alex@gmail.com",19);
+        Customer customer = new Customer(id,"Alex","alex@gmail.com",19, Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         // When
@@ -87,7 +87,7 @@ class CustomerServiceTest {
         when(customerDao.existsPersonWithEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19
+                "Alex", email, 19,Gender.MALE
         );
 
         // When
@@ -117,7 +117,7 @@ class CustomerServiceTest {
         when(customerDao.existsPersonWithEmail(email)).thenReturn(true);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19
+                "Alex", email, 19,Gender.MALE
         );
 
         // When
@@ -149,8 +149,8 @@ class CustomerServiceTest {
         // Given
         int id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19
-        );
+                id, "Alex", "alex@gmail.com", 19,
+                Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         String newEmail = "alexandro@amigoscode.com";

@@ -49,10 +49,9 @@ const  App = ()=> {
                 {customers.map((customer,index)=>(
                     <WrapItem key={index}>
                         <CardWithImage
-                            id={customer.id}
-                            name={customer.name}
-                            age={customer.age}
-                            email={customer.email}
+                            {...customer}
+                            imageNumber={index}
+
                         />
                     </WrapItem>
                 ))}

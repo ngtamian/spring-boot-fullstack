@@ -33,7 +33,7 @@ public class CustomerService {
             throw new DuplicateResourceNotFoundException("email already taken".formatted(email));
         }
         //add
-        Customer customer = new Customer(customerRegistrationRequest.name(),customerRegistrationRequest.email(),customerRegistrationRequest.age());
+        Customer customer = new Customer(customerRegistrationRequest.name(),customerRegistrationRequest.email(),customerRegistrationRequest.age(), customerRegistrationRequest.gender());
         customerDao.insertCustomer(customer);
     }
 
