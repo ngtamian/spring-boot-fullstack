@@ -5,13 +5,15 @@ import {Wrap,
 import  SidebarWithHeader from "./components/shared/Sidebar.jsx"
 import React, {useEffect, useState} from "react";
 import { getCustomers} from './services/client.js';
-import  CardWithImage from "./components/Card.jsx"
+import  CardWithImage from "./components/Card.jsx";
+import  DrawerForm from "./components/DrawerForm.jsx";
 
 
 const  App = ()=> {
 
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(false);
+
     useEffect(()=>{
         setLoading(true);
         getCustomers().then(res => {
@@ -38,13 +40,14 @@ const  App = ()=> {
     }
     if(customers.length <=0){
         return (<SidebarWithHeader>
-               <Text>No customers available</Text>
+               <Text mt={5}>No customers available</Text>
             </SidebarWithHeader>
         )
 
     }
 
     return (<SidebarWithHeader>
+            <DrawerForm/>
             <Wrap justify={"center"} spacing={"30px"}>
                 {customers.map((customer,index)=>(
                     <WrapItem key={index}>
