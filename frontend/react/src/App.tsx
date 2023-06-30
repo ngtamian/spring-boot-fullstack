@@ -2,10 +2,15 @@ import {Wrap,
        WrapItem,
        Button,
        Spinner, ButtonGroup, Text} from '@chakra-ui/react';
-import  SidebarWithHeader from "./components/shared/Sidebar.jsx"
+
+
+import  SidebarWithHeader from "./components/shared/SideBar.jsx"
 import React, {useEffect, useState} from "react";
+
 import { getCustomers} from './services/client.js';
+
 import  CardWithImage from "./components/Card.jsx";
+
 import  CreateCustomerDrawer from "./components/CreateCustomerDrawer.jsx";
 
 
