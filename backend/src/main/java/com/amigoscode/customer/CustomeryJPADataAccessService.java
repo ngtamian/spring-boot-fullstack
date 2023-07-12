@@ -48,4 +48,9 @@ public class CustomeryJPADataAccessService implements CustomerDao{
         customerRepository.save(update);
     }
 
+    @Override
+    public Optional<Customer> selectUserByEmail(String email) {
+        return customerRepository.findCustomerByEmail(email);
+    }
+
 }

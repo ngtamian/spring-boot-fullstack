@@ -27,7 +27,7 @@ public class SpringBootExampleApplication {
 			Name name = faker.name();
 			String firstName = name.firstName();
 			String lastName = name.lastName();
-			Customer customer = new Customer(firstName+" "+lastName, firstName.toLowerCase()+"."+name.lastName().toLowerCase()+"@amigoscode.com",random.nextInt(16,99), Gender.MALE);
+			Customer customer = new Customer(firstName+" "+lastName, firstName.toLowerCase()+"."+name.lastName().toLowerCase()+"@amigoscode.com", "password", random.nextInt(16,99), Gender.MALE);
 			customerRepository.save(customer);
 
 		};

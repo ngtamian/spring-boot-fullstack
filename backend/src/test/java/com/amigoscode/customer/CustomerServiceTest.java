@@ -10,6 +10,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -24,13 +25,17 @@ class CustomerServiceTest {
     private CustomerDao customerDao;
     private AutoCloseable autoCloseable;
     private CustomerService underTest;
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    private final CustomerDTOMapper customerDTOMapper= new CustomerDTOMapper();
 
 
 
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        underTest = new CustomerService(customerDao);
+        underTest = new CustomerService(customerDao, customerDTOMapper, passwordEncoder);
     }
 
     @AfterEach
@@ -53,15 +58,13 @@ class CustomerServiceTest {
     void canGetCustomer() {
         // Given
         int id = 10;
-        Customer customer = new Customer(id,"Alex","alex@gmail.com",19, Gender.MALE);
+        Customer customer = new Customer(id,"Alex","alex@gmail.com", "password", 19, Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
-
+        CustomerDTO expected = customerDTOMapper.apply(customer);
         // When
-        Customer actual = underTest.getCustomer(id);
-
-
+        CustomerDTO actual = underTest.getCustomer(id);
         // Then
-        assertThat(actual).isEqualTo(customer);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -87,8 +90,11 @@ class CustomerServiceTest {
         when(customerDao.existsPersonWithEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19,Gender.MALE
+                "Alex", email, "password", 19,Gender.MALE
         );
+
+        String passwordHash="c5554ml;f;lsd";
+        when(passwordEncoder.encode(request.password())).thenReturn(passwordHash);
 
         // When
         underTest.addCustomer(request);
@@ -106,6 +112,7 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(request.name());
         assertThat(capturedCustomer.getEmail()).isEqualTo(request.email());
         assertThat(capturedCustomer.getAge()).isEqualTo(request.age());
+        assertThat(capturedCustomer.getPassword()).isEqualTo(passwordHash);
 
     }
 
@@ -117,7 +124,7 @@ class CustomerServiceTest {
         when(customerDao.existsPersonWithEmail(email)).thenReturn(true);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Alex", email, 19,Gender.MALE
+                "Alex", email, "password", 19,Gender.MALE
         );
 
         // When
@@ -149,7 +156,7 @@ class CustomerServiceTest {
         // Given
         int id = 10;
         Customer customer = new Customer(
-                id, "Alex", "alex@gmail.com", 19,
+                id, "Alex", "alex@gmail.com", "password", 19,
                 Gender.MALE);
         when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
