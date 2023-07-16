@@ -9,7 +9,7 @@ import {
     Input,
     useDisclosure
 } from "@chakra-ui/react";
-import CreateCustomerForm from "./CreateCustomerForm.jsx";
+import CreateCustomerForm from "./shared/CreateCustomerForm.jsx";
 
 const  AddIcon =  () => "+";
 const  CloseIcon =  () => "x";
@@ -32,7 +32,7 @@ const  CloseIcon =  () => "x";
 
                     <DrawerBody>
                        <CreateCustomerForm
-                           fetchCustomers={fetchCustomers}
+                           onSuccess={fetchCustomers}
                        />
                     </DrawerBody>
 

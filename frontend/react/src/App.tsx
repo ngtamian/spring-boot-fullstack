@@ -12,23 +12,32 @@ import { getCustomers} from './services/client.js';
 import  CardWithImage from "./components/Card.jsx";
 
 import  CreateCustomerDrawer from "./components/CreateCustomerDrawer.jsx";
+import {errorNotification} from "./services/notification.js";
 
 
 const  App = ()=> {
 
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [err, setError] = useState("");
 
-    useEffect(()=>{
+    const fetchCustomers = () => {
         setLoading(true);
         getCustomers().then(res => {
-            setCustomers(res.data);
+            setCustomers(res.data)
         }).catch(err => {
-            console.log(err)
+            setError(err.response.data.message)
+            errorNotification(
+                err.code,
+                err.response.data.message
+            )
         }).finally(() => {
-            setLoading(false);
+            setLoading(false)
         })
+    }
 
+    useEffect(()=>{
+        fetchCustomers();
     },[])
     if(loading){
         //return <Button colorScheme='teal' variant='outline'>Click me</Button>
@@ -52,13 +61,16 @@ const  App = ()=> {
     }
 
     return (<SidebarWithHeader>
-            <CreateCustomerDrawer/>
+            <CreateCustomerDrawer
+                fetchCustomers={fetchCustomers}
+            />
             <Wrap justify={"center"} spacing={"30px"}>
                 {customers.map((customer,index)=>(
                     <WrapItem key={index}>
                         <CardWithImage
                             {...customer}
                             imageNumber={index}
+                            fetchCustomers={fetchCustomers}
 
                         />
                     </WrapItem>
